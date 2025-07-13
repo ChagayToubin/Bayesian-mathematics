@@ -1,35 +1,19 @@
 import requests
 import json
 
-import ast  # מאפשר להמיר מחרוזת לרשימה אמיתית
-
 from Models.Manger import manger
 
-from  Models.Clean import clean
 
 class Answer:
     @staticmethod
     def answer():
-        dfm=manger.init_program("../files/buy_computer_data.csv")
+        a=manger()
 
-        question = manger.get_question_check(dfm)
+        value = json.dumps([1, 2, 3, 4, 5])  # ממיר לרשימה כ־JSON
+        url = f"http://127.0.0.1:8000/@@@/{value}"
 
-        dic = manger.enter_ask_enter_conditin(dfm, question)
+        response = requests.get(url)
 
-        an = requests.get("http://127.0.0.1:8000/name/youth,medium,no,fair,no")
+        print(type(response.text))
 
-        list_condition = manger.enter_value(question, dfm)
-
-        data_str = an.content.decode()
-
-        data_dict = json.loads(data_str)
-
-        list_str = data_dict["Hello"]
-
-        final_list = ast.literal_eval(list_str)
-
-        print(final_list)
-
-        print(type(final_list))
-
-
+Answer.answer()

@@ -1,15 +1,22 @@
 from typing import Union
-
+import json
 from fastapi import FastAPI
+from fastapi import FastAPI, Query
+from typing import List
+
 
 app = FastAPI()
 
 
-@app.get("/name/{t}")
-def read_root(t):
-    return {"Hello": t}
+@app.get("/@@@/{list_condtion}")
+def check_items(list_condtion):
+    print(type(list_condtion))
+    print(list_condtion)
+    data = json.loads(list_condtion)
+    print(type(data))  # עכשיו list
+    print(data)
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+
+    return list_condtion
+

@@ -72,15 +72,29 @@ def get_main_key_dic_count(df,question):
         dic_count_main_question[i]=df[df[question]==i].shape[0]
     return (dic_count_main_question)
 
-buy_data=pd.read_csv("files/buy_computer_data.csv")
+# buy_data=pd.read_csv("files/buy_computer_data.csv")
+#
+# c=crate_table(buy_data,'Buy_Computer')
+#
+# buy_data=pd.read_csv("files/buy_computer_data.csv")
+#
+# dic_count_question_value =  get_main_key_dic_count(buy_data, 'Buy_Computer')
+#
+# x=print_answer(dic_count_question_value, c,['senior', "medium", "no", 'excellent'] )
+# print(max(x.items())[0])
+# print(x)
 
-c=crate_table(buy_data,'Buy_Computer')
 
-buy_data=pd.read_csv("files/buy_computer_data.csv")
+# נניח שזו הטבלה שלך:
+df = pd.read_csv("files/mushroom.csv")
 
-dic_count_question_value =  get_main_key_dic_count(buy_data, 'Buy_Computer')
+# ערבוב השורות בצורה רנדומלית
+df_shuffled = df.sample(frac=1, random_state=42)  # random_state בשביל שיהיה ניתן לשחזר
 
-x=print_answer(dic_count_question_value, c,['senior', "medium", "no", 'excellent'] )
-print(max(x.items())[0])
-print(x)
+
+split_index = int(0.7 * len(df))
+
+# חלוקה ל־70% ו־30%
+df_70 = df_shuffled[:split_index]
+df_30 = df_shuffled[split_index:]
 

@@ -1,21 +1,28 @@
-from Clean import clean
+from yaml import Loader
+
+from Models.Clean import clean
 from Models.Loader import  loader
-from Training_models import training_models
+from Models.Training_models import training_models
 from Models.Classified import classified
 from Models.check_precent import check
-import json
+
 
 
 class manger:
     def __init__(self):
 
-        self.dfm = manger.init_program("../files/buy_computer_data.csv")
+        df = loader.load_file("../files/mushroom.csv")
+        df=clean.clean_file(df)
+
+        df_random = df.sample(frac=1, random_state=42)
+        split_index = int(0.7 * len(df))
+
+        self.dfm=df_random[:split_index]
+        self.check_test = df_random[split_index:]
+
         self.choice = manger.chose_whate_to_do()
         self.question = manger.get_question_check(self.dfm)
         self.dic = manger.enter_ask_enter_conditin(self.dfm, self.question)
-
-
-
 
 
     @staticmethod
@@ -28,7 +35,8 @@ class manger:
     @staticmethod
     def init_program(name):
         file=loader.load_file(name)
-        return  clean.clean_file(file)
+        # return  clean.clean_file(file)
+        return file
 
     @staticmethod
     def enter_ask_enter_conditin(file,question):
@@ -41,12 +49,13 @@ class manger:
         return training_models.get_question(df)
 
     @staticmethod
-    def enter_value(que, df):
+    def enter_value(instance):
+        # que, df
         exemple = ''
         list = []
-        list_colmuns = [col for col in df.columns if col != que]
+        list_colmuns = [col for col in instance.dfm.columns if col != instance.question]
         for inp in list_colmuns:
-            exemple = df[inp].unique()
+            exemple = instance.dfm[inp].unique()
             print(f" please enter  {inp} \nexeple {exemple}")
             list.append(input())
 
@@ -55,16 +64,14 @@ class manger:
 
     def control_all(self):
         if   self.choice == '1':
+            list_condition = manger.enter_value(self)
 
-            list_condition = manger.enter_value(self.question, self.dfm)
-
-            answer=classified.classified_by_input(self.dfm,self.dic,self.question,list_condition)
+            answer=classified.classified_by_input(self,list_condition)
 
             print(f"The highest probability is that  {self.question} it is {answer} ")
 
         elif self.choice=='2':
-
-            check.precent_right(self.dfm,self.dic, self.question)
+            check.precent_right(self)
         else:
             print('unvalide inpute')
 

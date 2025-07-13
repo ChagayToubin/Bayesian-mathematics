@@ -1,14 +1,14 @@
 class classified:
     @staticmethod
-    def classified_by_input(df,dic,question,list_condition):
-
-        dic_count_main_value=classified.get_main_key_dic_count(df,question)
+    def classified_by_input(instace,list_condition):
+        # self.dfm, self.dic, self.question,
+        dic_count_main_value=classified.get_main_key_dic_count(instace.dfm,instace.question)
         sum_value_calculation = {}
         for key in dic_count_main_value.keys():
             sum_value_calculation[key] = 1
         div_by = 0
         count = 0
-        for key_no_yes, value in dic.items():
+        for key_no_yes, value in instace.dic.items():
             for t in value.values():
                 for x, y in t.items():
                     if x == list_condition[count]:

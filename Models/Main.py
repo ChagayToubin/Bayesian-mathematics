@@ -5,4 +5,5 @@ class main:
         m=manger()
         m.control_all()
 
-main.start()
+if __name__ == "__main__":
+    main.start()
