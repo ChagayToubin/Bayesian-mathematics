@@ -4,7 +4,6 @@ class training_models:
     @staticmethod
     def training_model_question(df,question):
 
-
         dic = {}
         value_unic = df[question].unique()
         columns_df = [col for col in df.columns if col != question]

@@ -62,13 +62,7 @@ def print_answer(dic_count_main_value , dic, list_condition):
         count=0
 
     return sum_value_calculation
-    # if x == list_condition[count] and key_no_yes == 'yes':
-    #     yes_sum *= y / sum(t.values())
-    #     # print('-yes--',yes_sum)
-    #
-    # elif (x == list_condition[count] and key_no_yes == 'no'):
-    #     no_sum *= y / sum(t.values())
-    #     # print('--no--',no_sum)
+
 
 def get_main_key_dic_count(df,question):
     values=df[question].unique()
@@ -78,11 +72,11 @@ def get_main_key_dic_count(df,question):
         dic_count_main_question[i]=df[df[question]==i].shape[0]
     return (dic_count_main_question)
 
-buy_data=pd.read_csv("buy_computer_data.csv")
+buy_data=pd.read_csv("files/buy_computer_data.csv")
 
 c=crate_table(buy_data,'Buy_Computer')
 
-buy_data=pd.read_csv("buy_computer_data.csv")
+buy_data=pd.read_csv("files/buy_computer_data.csv")
 
 dic_count_question_value =  get_main_key_dic_count(buy_data, 'Buy_Computer')
 
