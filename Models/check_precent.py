@@ -1,12 +1,6 @@
-from operator import index
 
-from rich.prompt import Prompt
 
-from Classified import classified
-from Clean import clean
-import pandas as  pd
 from Models.Classified import classified
-from Loader import loader
 
 class check:
     @staticmethod
