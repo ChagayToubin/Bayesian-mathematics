@@ -6,12 +6,8 @@ from Models.Training_models import training_models
 from Models.Classified import classified
 from Models.check_precent import check
 
-
-
 class manger:
     def __init__(self):
-
-
         # df = loader.load_file("../files/mushroom.csv")
         df = loader.load_file("files/mushroom.csv")
         df=clean.clean_file(df)
@@ -21,9 +17,6 @@ class manger:
 
         self.dfm=df_random[:split_index]
         self.check_test = df_random[split_index:]
-
-
-
 
     @staticmethod
     def chose_whate_to_do():
@@ -43,7 +36,6 @@ class manger:
         dic=training_models.training_model_question(file,question)
         return dic
 
-
     @staticmethod
     def get_question_check(df):
         return training_models.get_question(df)
@@ -60,10 +52,6 @@ class manger:
             list.append(input())
 
         return list
-    def server(self):
-        pass
-
-
     def control_all(self):
 
         self.choice = manger.chose_whate_to_do()
@@ -80,5 +68,3 @@ class manger:
             check.precent_right(self)
         else:
             print('unvalide inpute')
-
-

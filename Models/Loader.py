@@ -14,6 +14,4 @@ class loader:
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         full_path = os.path.join(base_dir, name)
 
-
-
         return pd.read_csv(full_path)
