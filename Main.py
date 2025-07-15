@@ -1,4 +1,4 @@
-from Manger import manger
+from Models.Manger import manger
 class main:
     @staticmethod
     def start():

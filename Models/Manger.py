@@ -57,6 +57,7 @@ class manger:
         self.choice = manger.chose_whate_to_do()
         self.question = manger.get_question_check(self.dfm)
         self.dic = manger.enter_ask_enter_conditin(self.dfm, self.question)
+
         if   self.choice == '1':
             list_condition = manger.enter_value(self)
 
