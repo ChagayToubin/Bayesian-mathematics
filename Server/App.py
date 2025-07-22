@@ -35,12 +35,16 @@ async def ask_values(request: Request):
     html = f"<h2>Enter values  (Target: {target_column})</h2>"
     html += "<form method='post' action='/submit'>"
     html += f"<input type='hidden' name='target_column' value='{target_column}' />"
+
     for col in input_columns:
         examples = list(my_manager.dfm[col].unique())
         html += f"<label>{col} (examples: {examples}):</label><br>"
         html += f"<input type='text' name='{col}' /><br><br>"
+
     html += "<input type='submit' value='Submit' /></form>"
     return f"<html><body>{html}</body></html>"
+
+
 
 @app.post("/submit", response_class=HTMLResponse)
 async def show_result(request: Request):

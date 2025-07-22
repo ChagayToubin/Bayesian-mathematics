@@ -1,4 +1,3 @@
-from yaml import Loader
 
 from Models.Clean import clean
 from Models.Loader import  loader
