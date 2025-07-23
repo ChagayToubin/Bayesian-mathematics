@@ -1,13 +1,13 @@
-from fastapi import FastAPI, Form, Request
+from fastapi import FastAPI,  Request
 from fastapi.responses import HTMLResponse
 from Models.Manger import manger
-from Models.Classified import classified
+import requests
 
 app = FastAPI()
 
 my_manager = manger()
 
-
+# show columns and ask user to choose target column
 @app.get("/", response_class=HTMLResponse)
 def choose_target():
 
@@ -20,7 +20,7 @@ def choose_target():
 
     return f"<html><body>{html}</body></html>"
 
-
+# ask user to enter values for selected target
 @app.post("/choose", response_class=HTMLResponse)
 async def ask_values(request: Request):
     form = await request.form()
@@ -44,8 +44,7 @@ async def ask_values(request: Request):
     html += "<input type='submit' value='Submit' /></form>"
     return f"<html><body>{html}</body></html>"
 
-
-
+# process user input and show prediction result
 @app.post("/submit", response_class=HTMLResponse)
 async def show_result(request: Request):
     form = await request.form()
@@ -54,7 +53,24 @@ async def show_result(request: Request):
     user_input = [form[key] for key in form.keys() if key != "target_column"]
     # שלח את זה לפונקציית הסיווג שלך
     try:
-        result = classified.classified_by_input(my_manager, user_input)
+        manager_json = {
+            "dfm": my_manager.dfm.to_dict(),
+            "question": my_manager.question,
+            "dic": my_manager.dic,
+            "list_condition":user_input
+        }
+
+        url = "http://127.0.0.1:8001/process"
+
+
+
+        response = requests.post(url, json=manager_json)
+        print(response.text[1:-1])
+        print(type(response.text))
+
+        # result = classified.classified_by_input(my_manager, user_input)
+        result=response.text[1:-1]
+
     except Exception as e:
         return f"<p> Error while classifying: {str(e)}</p><a href='/'>Back</a>"
     return f"""
@@ -62,7 +78,7 @@ async def show_result(request: Request):
         <body>
             <h2> Prediction for <u>{target_column}</u></h2>
             <p><b>Your input values:</b> {user_input}</p>
-            <p><b>Prediction result:</b> <span style='color: green;'>{result}</span></p>
+            <p><b>Prediction result:</b> <span style='color: green;'>"!" +{result }+"!"</span></p>
             <a href="/"> Try Again</a>
         </body>
     </html>
