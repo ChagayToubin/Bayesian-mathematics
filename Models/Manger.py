@@ -4,11 +4,10 @@ from Models.Loader import  loader
 from Models.Training_models import training_models
 from Models.Classified import classified
 from Models.check_precent import check
-
 class manger:
     def __init__(self):
         # df = loader.load_file("../files/mushroom.csv")
-        df = loader.load_file("files/mushroom.csv")
+        df = loader.load_file("files/computer_buy_data_check.csv")
         df=clean.clean_file(df)
 
         df_random = df.sample(frac=1, random_state=42)
@@ -17,6 +16,7 @@ class manger:
         self.dfm=df_random[:split_index]
         self.check_test = df_random[split_index:]
 
+        return
     @staticmethod
     def chose_whate_to_do():
         print('------------------\n'
@@ -56,10 +56,10 @@ class manger:
         self.choice = manger.chose_whate_to_do()
         self.question = manger.get_question_check(self.dfm)
         self.dic = manger.enter_ask_enter_conditin(self.dfm, self.question)
+        print(self.question+"===")
 
         if   self.choice == '1':
             list_condition = manger.enter_value(self)
-
             answer=classified.classified_by_input(self,list_condition)
 
             print(f"The highest probability is that  {self.question} it is {answer} ")

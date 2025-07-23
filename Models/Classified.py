@@ -31,8 +31,3 @@ class classified:
         for i in values:
             dic_count_main_question[i] = df[df[question] == i].shape[0]
         return (dic_count_main_question)
-
-
-
-
-
